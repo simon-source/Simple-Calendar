@@ -300,6 +300,7 @@ class WeekFragment : Fragment(), WeeklyCalendar {
         }
 
         addCurrentTimeIndicator(minuteHeight)
+        crossPast(minuteHeight)
     }
 
     private fun addNewLine() {
@@ -324,6 +325,41 @@ class WeekFragment : Fragment(), WeeklyCalendar {
                 x = todayColumn.x - extraWidth / 2
                 y = minutes * minuteHeight - markerHeight / 2
             }
+        }
+    }
+
+    private fun crossPast(minuteHeight: Float){
+
+        var curDay = Formatter.getDateTimeFromTS(mWeekTimestamp)
+        val todayCode = Formatter.getDayCodeFromDateTime(DateTime())
+        val minutes = DateTime().minuteOfDay
+        var lastDayColIndex = todayColumnIndex
+        if(todayColumnIndex < 0 && mWeekTimestamp < DateTime().seconds()) {
+            lastDayColIndex = 6
+        }
+        for (i in 0..lastDayColIndex) {
+
+            val dayCode = Formatter.getDayCodeFromDateTime(curDay)
+            val columnLayout = getColumnWithId(i)
+            (inflater.inflate(R.layout.week_cross, null, false) as ImageView).apply {
+                applyColorFilter(primaryColor)
+                imageAlpha = 64
+                mView.week_events_holder.addView(this, 0)
+                val spacing = (columnLayout.width * 0.5).toInt()
+                (layoutParams as RelativeLayout.LayoutParams).apply {
+                    width = columnLayout.width - spacing
+                    if (todayCode == dayCode) {
+                        height = (minutes * minuteHeight).toInt()
+                    } else {
+                        height = columnLayout.height
+                    }
+                }
+
+                x = columnLayout.x + spacing / 2
+                y = columnLayout.y
+            }
+            curDay = curDay.plusDays(1);
+
         }
     }
 
