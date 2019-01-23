@@ -140,6 +140,9 @@ class MonthView(context: Context, attrs: AttributeSet, defStyle: Int) : View(con
                     val xPos = x * dayWidth + horizontalOffset
                     val yPos = y * dayHeight + verticalOffset
                     val xPosCenter = xPos + dayWidth / 2
+                    if (day.isPast) {
+                        drawCross(canvas, xPos, yPos, day)
+                    }
                     if (day.isToday) {
                         canvas.drawCircle(xPosCenter, yPos + paint.textSize * 0.7f, paint.textSize * 0.75f, getCirclePaint(day))
                     }
@@ -250,6 +253,11 @@ class MonthView(context: Context, attrs: AttributeSet, defStyle: Int) : View(con
         canvas.drawText(event.title, 0, ellipsized.length, x + smallPadding * 2, y, getEventTitlePaint(event, startDay, endDay))
     }
 
+    private fun drawCross(canvas: Canvas, xPos: Float, yPos: Float, day: DayMonthly) {
+        canvas.drawLine(xPos + dayWidth / 10, yPos + dayHeight / 10, xPos + dayWidth - dayWidth / 10, yPos + dayHeight - dayHeight / 10, getCrossPaint(day))
+        canvas.drawLine(xPos + dayWidth - dayWidth / 10, yPos + dayHeight / 10, xPos + dayWidth / 10, yPos + dayHeight - dayHeight / 10, getCrossPaint(day))
+    }
+
     private fun getTextPaint(startDay: DayMonthly): Paint {
         var paintColor = textColor
         if (startDay.isToday) {
@@ -297,6 +305,10 @@ class MonthView(context: Context, attrs: AttributeSet, defStyle: Int) : View(con
         }
         curPaint.color = paintColor
         return curPaint
+    }
+
+    private fun getCrossPaint(day: DayMonthly): Paint {
+        return getCirclePaint(day)
     }
 
     private fun initWeekDayLetters() {

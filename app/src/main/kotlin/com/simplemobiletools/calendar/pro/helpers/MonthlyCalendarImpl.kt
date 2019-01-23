@@ -15,7 +15,9 @@ class MonthlyCalendarImpl(val callback: MonthlyCalendar, val context: Context) {
     private val DAYS_CNT = 42
     private val YEAR_PATTERN = "YYYY"
 
-    private val mToday: String = DateTime().toString(Formatter.DAYCODE_PATTERN)
+    private val mTodayDateTime = DateTime()
+    private val mToday: String = mTodayDateTime.toString(Formatter.DAYCODE_PATTERN)
+    private val mTodayNumber = mTodayDateTime.year * 10000 + mTodayDateTime.monthOfYear * 100 + mTodayDateTime.dayOfMonth
     private var mEvents = ArrayList<Event>()
 
     lateinit var mTargetDate: DateTime
@@ -43,6 +45,7 @@ class MonthlyCalendarImpl(val callback: MonthlyCalendar, val context: Context) {
 
         var isThisMonth = false
         var isToday: Boolean
+        var isPast: Boolean
         var value = prevMonthDays - firstDayIndex + 1
         var curDay = mTargetDate
 
@@ -65,10 +68,11 @@ class MonthlyCalendarImpl(val callback: MonthlyCalendar, val context: Context) {
             }
 
             isToday = isToday(curDay, value)
+            isPast = isPast(curDay, value)
 
             val newDay = curDay.withDayOfMonth(value)
             val dayCode = Formatter.getDayCodeFromDateTime(newDay)
-            val day = DayMonthly(value, isThisMonth, isToday, dayCode, newDay.weekOfWeekyear, ArrayList(), i)
+            val day = DayMonthly(value, isThisMonth, isToday, isPast, dayCode, newDay.weekOfWeekyear, ArrayList(), i)
             days.add(day)
             value++
         }
@@ -112,6 +116,11 @@ class MonthlyCalendarImpl(val callback: MonthlyCalendar, val context: Context) {
     private fun isToday(targetDate: DateTime, curDayInMonth: Int): Boolean {
         val targetMonthDays = targetDate.dayOfMonth().maximumValue
         return targetDate.withDayOfMonth(Math.min(curDayInMonth, targetMonthDays)).toString(Formatter.DAYCODE_PATTERN) == mToday
+    }
+
+    private fun isPast(targetDate: DateTime, curDayInMonth: Int): Boolean {
+        val targetYearMonthDay = targetDate.year * 10000 + targetDate.monthOfYear * 100 + curDayInMonth
+        return targetYearMonthDay < mTodayNumber
     }
 
     private val monthName: String
