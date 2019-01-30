@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Simple Calendar</string>
+    <string name="app_name">Simple Calendar 2</string>
     <string name="app_launcher_name">Calendar</string>
     <string name="change_view">Change view</string>
     <string name="daily_view">Daily view</string>
@@ -232,6 +232,7 @@
 
         This app is just one piece of a bigger series of apps. You can find the rest of them at https://www.simplemobiletools.com
     </string>
+    <string name="cross_past">Cross Past</string>
 
     <!--
         Haven't found some strings? There's more at

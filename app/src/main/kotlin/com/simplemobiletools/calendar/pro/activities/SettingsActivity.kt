@@ -71,6 +71,8 @@ class SettingsActivity : SimpleActivity() {
         updateTextColors(settings_holder)
         checkPrimaryColor()
         setupSectionColors()
+        setupWeeklyCrossPast()
+        setupMonthlyCrossPast()
     }
 
     override fun onPause() {
@@ -546,6 +548,22 @@ class SettingsActivity : SimpleActivity() {
         if (requestCode == GET_RINGTONE_URI && resultCode == RESULT_OK && resultData != null) {
             val newAlarmSound = storeNewYourAlarmSound(resultData)
             updateReminderSound(newAlarmSound)
+        }
+    }
+
+    private fun setupMonthlyCrossPast() {
+        settings_monthly_cross_past.isChecked = config.monthlyCrossPast
+        settings_monthly_cross_past_holder.setOnClickListener {
+            settings_monthly_cross_past.toggle()
+            config.monthlyCrossPast = settings_monthly_cross_past.isChecked
+        }
+    }
+
+    private fun setupWeeklyCrossPast() {
+        settings_weekly_cross_past.isChecked = config.weeklyCrossPast
+        settings_weekly_cross_past_holder.setOnClickListener {
+            settings_weekly_cross_past.toggle()
+            config.weeklyCrossPast = settings_weekly_cross_past.isChecked
         }
     }
 }

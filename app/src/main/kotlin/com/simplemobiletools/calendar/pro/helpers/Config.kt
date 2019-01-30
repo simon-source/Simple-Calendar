@@ -173,4 +173,12 @@ class Config(context: Context) : BaseConfig(context) {
     var lastVibrateOnReminder: Boolean
         get() = prefs.getBoolean(LAST_VIBRATE_ON_REMINDER, context.config.vibrateOnReminder)
         set(lastVibrateOnReminder) = prefs.edit().putBoolean(LAST_VIBRATE_ON_REMINDER, lastVibrateOnReminder).apply()
+
+    var weeklyCrossPast: Boolean
+        get() = prefs.getBoolean(WEEKLY_CROSS_PAST, false)
+        set(weeklyCrossPast) = prefs.edit().putBoolean(WEEKLY_CROSS_PAST, weeklyCrossPast).apply()
+
+    var monthlyCrossPast: Boolean
+        get() = prefs.getBoolean(MONTHLY_CROSS_PAST, false)
+        set(monthlyCrossPast) = prefs.edit().putBoolean(MONTHLY_CROSS_PAST, monthlyCrossPast).apply()
 }

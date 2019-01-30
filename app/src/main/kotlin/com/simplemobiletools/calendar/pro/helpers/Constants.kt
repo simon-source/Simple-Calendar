@@ -68,6 +68,8 @@ const val DEFAULT_REMINDER_2 = "default_reminder_2"
 const val DEFAULT_REMINDER_3 = "default_reminder_3"
 const val PULL_TO_REFRESH = "pull_to_refresh"
 const val LAST_VIBRATE_ON_REMINDER = "last_vibrate_on_reminder"
+const val WEEKLY_CROSS_PAST = "weekly_cross_past"
+const val MONTHLY_CROSS_PAST = "monthly_cross_past"
 
 // repeat_rule for monthly and yearly repetition
 const val REPEAT_SAME_DAY = 1                           // i.e. 25th every month, or 3rd june (if yearly repetition)

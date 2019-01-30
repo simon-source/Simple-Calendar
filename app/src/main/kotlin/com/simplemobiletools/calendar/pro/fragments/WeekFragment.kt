@@ -300,7 +300,9 @@ class WeekFragment : Fragment(), WeeklyCalendar {
         }
 
         addCurrentTimeIndicator(minuteHeight)
-        crossPast(minuteHeight)
+        if(mConfig.weeklyCrossPast) {
+            crossPast(minuteHeight)
+        }
     }
 
     private fun addNewLine() {
@@ -338,7 +340,6 @@ class WeekFragment : Fragment(), WeeklyCalendar {
             lastDayColIndex = 6
         }
         for (i in 0..lastDayColIndex) {
-
             val dayCode = Formatter.getDayCodeFromDateTime(curDay)
             val columnLayout = getColumnWithId(i)
             (inflater.inflate(R.layout.week_cross, null, false) as ImageView).apply {
@@ -359,7 +360,6 @@ class WeekFragment : Fragment(), WeeklyCalendar {
                 y = columnLayout.y
             }
             curDay = curDay.plusDays(1);
-
         }
     }
 
